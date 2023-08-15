@@ -10,12 +10,15 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 
 class JntServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot() : void
     {
         //
+        $this->publishes([
+            __DIR__.'/../config/package.php' => config_path('jnt.php')
+        ], 'jnt-config');
     }
 
-    public function register()
+    public function register() : void
     {
         $this->app->bind(Client::class, function (Container $app) {
             $url = $app['config']['jnt.api.url'];
@@ -25,10 +28,6 @@ class JntServiceProvider extends ServiceProvider
             return new Client($url, $username, $key);
         });
 
-        $this->publishes([
-            __DIR__.'/../../config/jnt.php' => config_path('jnt.php'),
-        ]);
-
-        $this->mergeConfigFrom(__DIR__ . '/../../config/jnt.php', 'jnt');
+        $this->mergeConfigFrom(__DIR__ . '/../config/jnt.php', 'jnt');
     }
 }
