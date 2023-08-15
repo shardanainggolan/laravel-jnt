@@ -18,17 +18,17 @@ class JntServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(Client::class, function (Container $app) {
-            $url = $app['config']['jne.api.url'];
-            $username = $app['config']['jne.api.username'];
-            $key = $app['config']['jne.api.key'];
+            $url = $app['config']['jnt.api.url'];
+            $username = $app['config']['jnt.api.username'];
+            $key = $app['config']['jnt.api.key'];
 
             return new Client($url, $username, $key);
         });
 
         $this->publishes([
-            __DIR__.'/../../config/jne.php' => config_path('jne.php'),
+            __DIR__.'/../../config/jnt.php' => config_path('jnt.php'),
         ]);
 
-        $this->mergeConfigFrom(__DIR__ . '/../../config/jne.php', 'jne');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/jnt.php', 'jnt');
     }
 }

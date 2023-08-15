@@ -27,11 +27,11 @@ JNT_API_URL= #api url JNT yang digunakan
 ### Tracking Nomor Resi
 
 ```php
-use Aditia\Jne\Facades\Jne;
+use Nextlogique\Jnt\Facades\Jnt;
 
 $noResi = 'XXXXXXXXXXX';
 
-$response = Jne::tracking($noResi);
+$response = Jnt::tracking($noResi);
 
 $response->cnote; // Object cnote
 $response->cnote->cnote_pod_date;
@@ -48,8 +48,8 @@ foreach ($response->history as $history) {
 ### Generate Nomor Resi
 
 ```php
-use Aditia\Jne\Facades\Jne;
-use Aditia\Jne\Http\Requests\GenerateAwbRequest;
+use Nextlogique\Jnt\Facades\Jnt;
+use Nextlogique\Jnt\Http\Requests\GenerateAwbRequest;
 
 $body = new GenerateAwbRequest([
     'OLSHOP_BRANCH'          => 'CGK000',
@@ -85,7 +85,7 @@ $body = new GenerateAwbRequest([
     'OLSHOP_COD_AMOUNT'      => 0,
 ])
 
-$response = Jne::generateAwb($body);
+$response = Jnt::generateAwb($body);
 
 $response->awb->airwaybill; // nomor resi
 ```
@@ -93,8 +93,8 @@ $response->awb->airwaybill; // nomor resi
 ### Cek Ongkir
 
 ```php
-use Aditia\Jne\Facades\Jne;
-use Aditia\Jne\Http\Requests\TariffRequest;
+use Nextlogique\Jnt\Facades\Jnt;
+use Nextlogique\Jnt\Http\Requests\TariffRequest;
 
 $body = new TariffRequest([
     'from'   => 'CGK10000',
@@ -102,7 +102,7 @@ $body = new TariffRequest([
     'weight' => 1, // dalam kilogram
 ]);
 
-$response = Jne::tariff($body);
+$response = Jnt::tariff($body);
 
 foreach ($response->price as $price) {
     $price->origin_name;
@@ -121,8 +121,8 @@ foreach ($response->price as $price) {
 ### Stock Nomor Resi
 
 ```php
-use Aditia\Jne\Facades\Jne;
-use Aditia\Jne\Http\Requests\StockAwbRequest;
+use Nextlogique\Jnt\Facades\Jnt;
+use Nextlogique\Jnt\Http\Requests\StockAwbRequest;
 
 $body = new StockAwbRequest([
     'BRANCH'      => 'AMI000',
@@ -134,7 +134,7 @@ $body = new StockAwbRequest([
     'REASON'      => 'FLASH SALE',
 ]);
 
-$response = Jne::stockAwb($body);
+$response = Jnt::stockAwb($body);
 
 foreach ($response->awb as $awb) {
     $awb->airwaybill;
