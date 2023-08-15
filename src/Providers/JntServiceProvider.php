@@ -14,7 +14,7 @@ class JntServiceProvider extends ServiceProvider
     {
         //
         $this->publishes([
-            __DIR__.'/../config/package.php' => config_path('jnt.php')
+            __DIR__.'/../../config/package.php' => config_path('jnt.php')
         ], 'jnt-config');
     }
 
@@ -28,6 +28,6 @@ class JntServiceProvider extends ServiceProvider
             return new Client($url, $username, $key);
         });
 
-        $this->mergeConfigFrom(__DIR__ . '/../config/jnt.php', 'jnt');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/jnt.php', 'jnt');
     }
 }
