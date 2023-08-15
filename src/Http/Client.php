@@ -12,15 +12,18 @@ use Nextlogique\Jnt\Http\Response\GenerateAwbResponse;
 
 class Client
 {
-    const TRACKING_URL = '/tracing/api/list/v1/cnote';
-    const GENERATE_AWB_URL = '/tracing/api/generatecnote';
+    const ORDER_URL = '/jts-idn-ecommerce-api/api/order/create';
     const TARIFF_URL = '/tracing/api/pricedev';
+    const TRACKING_URL = '/tracing/api/list/v1/cnote';
+    const CANCELLATION_URL = '/jts-idn-ecommerce-api/api/order/cancel';
+    const GENERATE_AWB_URL = '/tracing/api/generatecnote';
     const PICKUP_URL = '/pickupcashless';
     const STOCK_AWB_URL = '/tracing/api/stockawb';
 
     protected string $baseUrl;
     protected string $username;
     protected string $key;
+    protected string $passwordTrack;
 
     public function __construct(
         string $baseUrl,
@@ -77,7 +80,13 @@ class Client
 
         $requestBody->validate();
 
-        $response = $this->post(self::TARIFF_URL, $requestBody->toArray());
+        $signature = $this->generateSignature($requestBody->toArray(), $this->key);
+
+        // $response = $this->post(self::TARIFF_URL, $requestBody->toArray());
+        $response = $this->post(self::TARIFF_URL, [
+            'data'  => $requestBody->toArray(),
+            'sign'  => $signature
+        ]);
 
         return new TariffResponse(
             $response->json(),
@@ -106,6 +115,11 @@ class Client
         );
     }
 
+    public function generateSignature($data, $key)
+    {
+        $signature = base64_encode(md5(($data_param).$key));
+        return $signature;
+    }
 
     public function post(string $url, array $data): Response
     {
