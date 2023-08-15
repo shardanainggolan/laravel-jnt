@@ -1,6 +1,6 @@
 <?php
 
-namespace Nextlogique\Knt\Http\Response;
+namespace Nextlogique\Jnt\Http\Response;
 
 use Nextlogique\Jnt\Http\Response\Tariff\Price;
 use Nextlogique\Jnt\Http\Response\Factory as ResponseFactory;
