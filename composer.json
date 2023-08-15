@@ -1,0 +1,48 @@
+{
+    "name": "shardanainggolan/laravel-jnt",
+    "description": "Simple JNT api wrapper for Laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sharda Hottua Mahulae",
+            "email": "sharda.nainggolan28@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.4|^8.0|^8.1",
+        "ext-json": "*",
+        "illuminate/http": "^7.0|^8.0|^9.0",
+        "illuminate/support": "^7.0|^8.0|^9.0",
+        "guzzlehttp/guzzle": "^6.5.5|^7.0.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "6.17.0",
+        "orchestra/testbench-core": "6.21.0",
+        "phpunit/phpunit": "^9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nextlogique\\Jnt\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nextlogique\\Jnt\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nextlogique\\Jnt\\Providers\\JntServiceProvider"
+            ],
+            "aliases": {
+                "JNT": "Nextlogique\\Jnt\\Facades\\Jnt"
+            }
+        }
+    }
+}
