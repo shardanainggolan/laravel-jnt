@@ -12,13 +12,13 @@ class JntServiceProvider extends ServiceProvider
 {
     public function boot() : void
     {
-        $configPath = __DIR__ . '/../config/jnt.php';
+        $configPath = __DIR__ . '/../../config/jnt.php';
         $this->publishes([$configPath => config_path('jnt.php')], 'jnt');
     }
 
     public function register() : void
     {
-        $configPath = __DIR__ . '/../config/jnt.php';
+        $configPath = __DIR__ . '/../../config/jnt.php';
         $this->mergeConfigFrom($configPath, 'jnt');
 
         $this->app->bind(Client::class, function (Container $app) {
