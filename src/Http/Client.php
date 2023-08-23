@@ -9,11 +9,12 @@ use Nextlogique\Jnt\Http\Response\StockAwbResponse;
 use Nextlogique\Jnt\Http\Response\TrackingResponse;
 use Nextlogique\Jnt\Http\Requests\Contracts\Request;
 use Nextlogique\Jnt\Http\Response\GenerateAwbResponse;
+use Nextlogique\Jnt\Http\Response\CreateOrderResponse;
 
 class Client
 {
-    const ORDER_URL = '/jts-idn-ecommerce-api/api/order/create';
-    const TARIFF_URL = '/tracing/api/pricedev';
+    const CREATE_ORDER_URL = '/jts-idn-ecommerce-api/api/order/create';
+    const TARIFF_URL = '/jandt_track/inquiry.action';
     const TRACKING_URL = '/tracing/api/list/v1/cnote';
     const CANCELLATION_URL = '/jts-idn-ecommerce-api/api/order/cancel';
     const GENERATE_AWB_URL = '/tracing/api/generatecnote';
@@ -59,6 +60,21 @@ class Client
         );
     }
 
+    public function createOrder(Request $requestBody): CreateOrderResponse
+    {
+        $requestBody->setCredentials($this->getUsername(), $this->getApiKey());
+
+        $requestBody->validate();
+
+        $response = $this->post(self::CREATE_ORDER_URL, $requestBody->toArray());
+
+        return new CreateOrderResponse(
+            $response->json(),
+            $response->status(),
+            $response->headers()
+        );
+    }
+
     public function generateAwb(Request $requestBody): GenerateAwbResponse
     {
         $requestBody->setCredentials($this->getUsername(), $this->getApiKey());
@@ -83,8 +99,9 @@ class Client
         $signature = $this->generateSignature($requestBody->toArray(), $this->key);
 
         // $response = $this->post(self::TARIFF_URL, $requestBody->toArray());
+        // dd(json_encode($requestBody->toArray()));
         $response = $this->post(self::TARIFF_URL, [
-            'data'  => $requestBody->toArray(),
+            'data'  => json_encode($requestBody->toArray()),
             'sign'  => $signature
         ]);
 
@@ -117,7 +134,10 @@ class Client
 
     public function generateSignature($data, $key)
     {
-        $signature = base64_encode(md5(($data_param).$key));
+        // dd(json_encode($data));
+        $signature = base64_encode(md5((json_encode($data)).$key));
+
+        // dd($signature);
         return $signature;
     }
 

@@ -55,21 +55,21 @@ class TariffRequest implements RequestContract
             throw new InvalidTariffRequestException('api_key is required.');
         }
 
-        if (! ($this->attributes['from'] ?? null)) {
-            throw new InvalidTariffRequestException('from is required.');
-        }
+        // if (! ($this->attributes['from'] ?? null)) {
+        //     throw new InvalidTariffRequestException('from is required.');
+        // }
 
-        if (! ($this->attributes['thru'] ?? null)) {
-            throw new InvalidTariffRequestException('thru is required.');
-        }
+        // if (! ($this->attributes['thru'] ?? null)) {
+        //     throw new InvalidTariffRequestException('thru is required.');
+        // }
 
-        if (! ($this->attributes['weight'] ?? null)) {
-            throw new InvalidTariffRequestException('weight is required.');
-        }
+        // if (! ($this->attributes['weight'] ?? null)) {
+        //     throw new InvalidTariffRequestException('weight is required.');
+        // }
 
-        if (! is_numeric($this->attributes['weight'])) {
-            throw new InvalidTariffRequestException('weight must be a number.');
-        }
+        // if (! is_numeric($this->attributes['weight'])) {
+        //     throw new InvalidTariffRequestException('weight must be a number.');
+        // }
 
         return;
     }
